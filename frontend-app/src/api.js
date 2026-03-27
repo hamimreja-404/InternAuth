@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'http://localhost:8080/api', // Your CodeIgniter backend URL
+    baseURL: 'http://internauth-api.great-site.net/index.php/api', // Your CodeIgniter backend URL
 });
 
 // Automatically attach the JWT token
