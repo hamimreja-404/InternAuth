@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, Eye, EyeOff, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import InteractiveAvatar from '../Components/InteractiveAvatar';
-import api from '../api';
+import {loginUser} from '../api';
 
 // --- INTERACTIVE AVATAR COMPONENT ---
 // Replaces the monkey. Animates based on focus state and types.
@@ -20,19 +20,20 @@ export default function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
     try {
-      const response = await api.post('/login', { email, password });
-      localStorage.setItem('token', response.data.token);
+
+      await loginUser(email, password);
+
       navigate('/users');
+      
     } catch (err) {
-      const actualError = err.response?.data?.messages?.error 
-        || err.response?.data?.error 
-        || 'Invalid login credentials.';
+
+      const actualError = err.message || 'Invalid login credentials.';
       setError(actualError);
     } finally {
       setIsLoading(false);
