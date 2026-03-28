@@ -493,11 +493,11 @@ export default function Register() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <InputField icon={User} label="First Name" type="text" name="first_name" placeholder="John" onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur} required />
-              <InputField icon={User} label="Last Name" type="text" name="last_name" placeholder="Doe" onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur} required />
-              <InputField icon={Mail} label="Email Address" type="email" name="email" placeholder="john@university.edu" onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur} required />
+              <InputField icon={User} label="First Name" type="text" name="first_name" placeholder="Hamim" onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur} required />
+              <InputField icon={User} label="Last Name" type="text" name="last_name" placeholder="Reja" onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur} required />
+              <InputField icon={Mail} label="Email Address" type="email" name="email" placeholder="hamim.reja@university.edu" onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur} required />
               {/* Note the name is 'mobile' now! */}
-              <InputField icon={Phone} label="Mobile Number" type="tel" name="mobile" placeholder="+1 234 567 8900" onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur} required />
+              <InputField icon={Phone} label="Mobile Number" type="tel" name="mobile" placeholder="+91 9999999999" onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur} required />
               
               <InputField 
                 icon={Lock} 
