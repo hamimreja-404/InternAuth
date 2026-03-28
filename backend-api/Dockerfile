@@ -1,29 +1,36 @@
-# Use the official PHP 8.2 image with Apache server
+# Use PHP 8.2 with Apache
 FROM php:8.2-apache
 
-# Install system dependencies and PHP extensions required by CodeIgniter 4
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libzip-dev \
     zip \
     unzip \
+    git \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl mysqli pdo pdo_mysql zip
 
-# Enable Apache mod_rewrite (Crucial for routing URLs to the public folder)
+# Install Composer (The PHP package manager)
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Tell Apache that the "front door" is the public folder, not the root
+# Set the document root to the public folder
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Copy all your local files into the server
+# Copy project files
 COPY . /var/www/html/
 
-# Give the server permission to write logs and cache files
+# --- NEW STEP: Run Composer Install ---
+# This builds the 'vendor' folder inside the container automatically
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+
+# Set permissions
 RUN chown -R www-data:www-data /var/www/html/writable \
     && chmod -R 775 /var/www/html/writable
 
-# Open port 80 for web traffic
 EXPOSE 80
